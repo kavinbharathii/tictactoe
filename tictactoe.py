@@ -9,6 +9,7 @@ board = [
     [0, 0, 0],
 ]
 
+# display and visual variables
 width = 600
 height = 600
 display = pygame.display.set_mode((width, height))
@@ -21,30 +22,31 @@ line_color = (0,200,150)
 x_color = (250, 200, 150)
 o_color = (150, 250 ,200)
 
+# function to draw x
 def draw_x(pos):
     x = pos[0]
     y = pos[1]
     pygame.draw.line(display, x_color, ((x * line_x) + (line_x // 4), (y * line_y) + (line_y // 4)), ((x * line_x) +  (3 * (line_x // 4)), (y * line_y) + (3 * (line_y // 4))), 2)
     pygame.draw.line(display, x_color, ((x * line_x) + (3 * (line_x // 4)), (y * line_y) + (line_y // 4)) , ((x * line_x) + (line_x // 4), (y * line_y) + (3 * (line_y // 4))), 2)
 
-
+# function to draw o
 def draw_o(pos):
     x = pos[0]
     y = pos[1]
     pygame.draw.circle(display, o_color, (((x * line_x) +  (line_x // 2)), ((y * line_y) + (line_y // 2))), (3 * (line_x // 8)), 2)
 
-
+# list that kepps track of what positoions have been used
 available_pos = [(0,0), (0,1), (0,2), (1,0), (1,1), (1,2), (2,0), (2,1), (2,2)] 
 
 def available(pos):
     if pos in available_pos:
         return True
 
-
+# gets the row, col data by the mouse click event
 def get_mouse_pos():
     return (pygame.mouse.get_pos()[0] // line_x, pygame.mouse.get_pos()[1] // line_x)
     
-
+# main loop of the program
 def main():
     run = True
     turn = 0
@@ -79,7 +81,7 @@ def main():
                 if click == 12:
                     run = False
 
-
+        # draws the layout of the board
         if width % 3 == 0:
             if height % 3 == 0:
                 pygame.draw.line(display, line_color, (0, line_y), (width, line_y), 2 )
@@ -89,8 +91,9 @@ def main():
                 pygame.display.flip()
 
 
+# checks for a winner
         if len(available_pos) == 0:
-
+            
             for i in range(len(board)):
                 if board[i][0] == board[i][1] and board[i][1] == board[i][2]:
                     winner = board[i][0]
