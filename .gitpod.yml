@@ -1,0 +1,4 @@
+tasks:
+  windows - pip install pygame
+  mac / linux - pip3 install pygame
+  
