@@ -99,3 +99,66 @@ class Tacboard(object):
 
 def get_mouse_pos():
     return (pygame.mouse.get_pos()[0] // line_x, pygame.mouse.get_pos()[1] // line_x)
+
+
+
+def main():
+    run = True
+    turn = 0
+    click = 0
+    board = Tacboard()
+    end_state = None
+
+    while run:
+        board.draw_board()
+        if end_state:
+            time.sleep(2)
+            run = False
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                click += 1
+                pos = get_mouse_pos()
+
+                if board.available(pos):
+                    if turn % 2 == 0:
+                        board.draw_x(pos)
+                    else:
+                        board.draw_o(pos)
+
+                if click == 12:
+                    run = False
+
+                turn += 1
+
+                # ----- state analysis for each frame ----- #
+
+                state = board.state()
+
+                if state == 1:
+                    print('')
+                    print("X wins")
+                    print('')
+                    end_state = True
+                elif state == -1:
+                    print('')
+                    print("O wins")
+                    print('')
+                    end_state = True
+                elif state == None:
+                    if board.full():
+                        print('')
+                        print("TIE")
+                        print('')
+                        end_state = True
+                    else:
+                        pass
+
+        pygame.display.flip()
+
+
+if __name__ == "__main__":
+    main()
