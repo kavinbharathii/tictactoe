@@ -95,3 +95,7 @@ class Tacboard(object):
                     return False
 
         return True
+
+
+def get_mouse_pos():
+    return (pygame.mouse.get_pos()[0] // line_x, pygame.mouse.get_pos()[1] // line_x)
